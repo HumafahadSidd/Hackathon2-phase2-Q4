@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Modern Authentication UI
 
 This project features a premium, animated authentication UI with the following enhancements:
@@ -45,3 +46,56 @@ This project features a premium, animated authentication UI with the following e
 - Adapts to mobile, tablet, and desktop screens
 - Touch-friendly elements for mobile devices
 - Properly sized tap targets
+=======
+# Authentication UI for DO IT App
+
+This document describes the authentication UI components implemented for the DO IT productivity app, including login and signup forms.
+
+## Features
+
+- Modern, clean design with blue gradient background
+- Responsive layout that works on all device sizes
+- Toggle between login and signup forms
+- Form validation for required fields
+- Social login options (Apple and Google)
+- "Forgot password" link for login form
+- Consistent branding with checkmark logo
+
+## Components
+
+### AuthForms Component
+
+The main authentication component that handles both login and signup functionality:
+
+- Located at `src/components/AuthForms.jsx`
+- Uses React state to manage form data and toggle between login/signup
+- Implements form validation
+- Includes social login options
+- Responsive design using Tailwind CSS
+
+## Design Elements
+
+- **Background**: Blue gradient (`linear-gradient(135deg, #4F95DA 0%, #6B728E 100%)`)
+- **Form Card**: White background with rounded corners and shadow
+- **Input Fields**: White background with subtle border, icons on the left
+- **Buttons**: Blue primary button with hover effects
+- **Icons**: From react-icons library (FaEnvelope, FaLock, FaUser, FaApple, FaGoogle, FaCheck)
+
+## Pages
+
+- Login page: `src/app/login/page.js`
+- Signup page: `src/app/signup/page.js`
+- Both pages render the AuthForms component
+
+## Usage
+
+The AuthForms component is currently imported and used in both the login and signup pages. The component manages its own state to determine whether to show the login or signup form.
+
+## Future Enhancements
+
+- Connect to authentication service
+- Add password strength indicator
+- Implement "Remember me" option
+- Add loading states during form submission
+- Add accessibility improvements
+>>>>>>> 1de9837 (adding)

@@ -1,0 +1,115 @@
+# Spec Kit Configuration: Hackathon Todo Phase II
+
+# Purpose: Define phases, feature mappings, and configuration for the spec-driven development process
+
+version: 1.0
+
+# Phase Definitions
+phases:
+  - name: "Phase II - Full Stack Implementation"
+    description: "Transform console-based todo app into full-stack web application"
+    start_date: "2026-01-20"
+    end_date: "2026-02-20"
+    status: "active"
+    features:
+      - "task-crud"
+      - "authentication"
+      - "api-design"
+      - "database-schema"
+      - "ui-pages"
+      - "ui-components"
+
+# Feature Mapping
+features:
+  task-crud:
+    name: "Task CRUD Operations"
+    description: "User-specific task management (Create, Read, Update, Delete, Complete)"
+    spec_path: "specs/features/task-crud.md"
+    priority: "P1"
+    dependencies: ["authentication"]
+    
+  authentication:
+    name: "User Authentication"
+    description: "Registration, login, and JWT-based session management"
+    spec_path: "specs/features/authentication.md"
+    priority: "P1"
+    dependencies: []
+    
+  api-design:
+    name: "API Design"
+    description: "REST endpoints and JWT authentication specification"
+    spec_path: 
+      - "specs/api/rest-endpoints.md"
+      - "specs/api/auth-jwt.md"
+    priority: "P1"
+    dependencies: ["authentication"]
+    
+  database-schema:
+    name: "Database Schema"
+    description: "PostgreSQL schema with user-task relationships"
+    spec_path: "specs/database/schema.md"
+    priority: "P1"
+    dependencies: []
+    
+  ui-pages:
+    name: "UI Pages"
+    description: "Page structure, routing, and navigation"
+    spec_path: "specs/ui/pages.md"
+    priority: "P2"
+    dependencies: ["authentication"]
+    
+  ui-components:
+    name: "UI Components"
+    description: "Reusable UI components and data flow"
+    spec_path: "specs/ui/components.md"
+    priority: "P2"
+    dependencies: ["ui-pages"]
+
+# Project Configuration
+project:
+  name: "Hackathon Todo Phase II – Full Stack Web Application"
+  description: "Modern, multi-user, full-stack todo application with authentication"
+  architecture: "monorepo"
+  tech_stack:
+    frontend: "Next.js 16+ (App Router)"
+    backend: "Python FastAPI"
+    database: "Neon Serverless PostgreSQL"
+    orm: "SQLModel"
+    auth: "Better Auth with JWT"
+  repository_structure:
+    specs_dir: "specs/"
+    frontend_dir: "frontend/"
+    backend_dir: "backend/"
+    root_config: ".specify/"
+
+# Development Workflow
+workflow:
+  stages:
+    - "specify"      # Specification creation
+    - "plan"         # Implementation planning
+    - "tasks"        # Task breakdown
+    - "implement"    # Code generation
+    - "review"       # Code review
+    - "test"         # Testing
+  enforcement:
+    spec_first: true
+    no_manual_coding: true
+    constitutional_compliance: true
+
+# Validation Rules
+validation:
+  required_sections:
+    - "Purpose"
+    - "Scope"
+    - "User Stories"
+    - "Rules"
+    - "Constraints"
+  constitutional_check: true
+  automated_verification: true
+
+# Output Directories
+output:
+  specs_dir: "specs/"
+  plans_dir: "specs/plans/"
+  tasks_dir: "specs/tasks/"
+  docs_dir: "docs/"

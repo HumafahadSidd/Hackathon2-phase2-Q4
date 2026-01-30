@@ -1,0 +1,305 @@
+openapi: 3.0.3
+info:
+  title: Hackathon Todo Phase II API
+  description: API for the Hackathon Todo Phase II application with user authentication and task management
+  version: 1.0.0
+servers:
+  - url: https://api.hackathon-todo.com/v1
+    description: Production server
+  - url: https://staging.api.hackathon-todo.com/v1
+    description: Staging server
+
+paths:
+  /api/{user_id}/tasks:
+    get:
+      summary: Get all tasks for a user
+      description: Retrieve all tasks associated with the specified user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: ID of the user whose tasks to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of tasks for the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        '401':
+          description: Unauthorized - Invalid or missing JWT
+        '403':
+          description: Forbidden - JWT user ID doesn't match path user ID
+        '404':
+          description: Not Found - User ID doesn't exist
+      security:
+        - bearerAuth: []
+
+    post:
+      summary: Create a new task for a user
+      description: Create a new task associated with the specified user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: ID of the user to create the task for
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+      responses:
+        '201':
+          description: Task created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad Request - Invalid request body
+        '401':
+          description: Unauthorized - Invalid or missing JWT
+        '403':
+          description: Forbidden - JWT user ID doesn't match path user ID
+      security:
+        - bearerAuth: []
+
+  /api/{user_id}/tasks/{id}:
+    get:
+      summary: Get a specific task for a user
+      description: Retrieve a specific task associated with the specified user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: ID of the user whose task to retrieve
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: ID of the task to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '401':
+          description: Unauthorized - Invalid or missing JWT
+        '403':
+          description: Forbidden - JWT user ID doesn't match path user ID
+        '404':
+          description: Not Found - Task doesn't exist or doesn't belong to user
+      security:
+        - bearerAuth: []
+
+    put:
+      summary: Update a specific task for a user
+      description: Update a specific task associated with the specified user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: ID of the user whose task to update
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: ID of the task to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+      responses:
+        '200':
+          description: Task updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad Request - Invalid request body
+        '401':
+          description: Unauthorized - Invalid or missing JWT
+        '403':
+          description: Forbidden - JWT user ID doesn't match path user ID
+        '404':
+          description: Not Found - Task doesn't exist or doesn't belong to user
+      security:
+        - bearerAuth: []
+
+    delete:
+      summary: Delete a specific task for a user
+      description: Delete a specific task associated with the specified user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: ID of the user whose task to delete
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: ID of the task to delete
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Task deleted successfully
+        '401':
+          description: Unauthorized - Invalid or missing JWT
+        '403':
+          description: Forbidden - JWT user ID doesn't match path user ID
+        '404':
+          description: Not Found - Task doesn't exist or doesn't belong to user
+      security:
+        - bearerAuth: []
+
+  /api/{user_id}/tasks/{id}/complete:
+    patch:
+      summary: Mark a specific task as complete/incomplete for a user
+      description: Update the completion status of a specific task associated with the specified user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: ID of the user whose task to update
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: ID of the task to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskCompletionRequest'
+      responses:
+        '200':
+          description: Task completion status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad Request - Invalid request body
+        '401':
+          description: Unauthorized - Invalid or missing JWT
+        '403':
+          description: Forbidden - JWT user ID doesn't match path user ID
+        '404':
+          description: Not Found - Task doesn't exist or doesn't belong to user
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Task:
+      type: object
+      required:
+        - id
+        - user_id
+        - title
+        - completed
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the task
+        user_id:
+          type: string
+          description: ID of the user who owns the task
+        title:
+          type: string
+          description: Task title (1-255 characters)
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          description: Task description (0-1000 characters)
+          maxLength: 1000
+        completed:
+          type: boolean
+          description: Completion status of the task
+        created_at:
+          type: string
+          format: date-time
+          description: Task creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          
+    CreateTaskRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: Task title (1-255 characters)
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          description: Task description (0-1000 characters)
+          maxLength: 1000
+        completed:
+          type: boolean
+          description: Initial completion status (default: false)
+          default: false
+
+    UpdateTaskRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: Task title (1-255 characters)
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          description: Task description (0-1000 characters)
+          maxLength: 1000
+        completed:
+          type: boolean
+          description: Completion status of the task
+
+    UpdateTaskCompletionRequest:
+      type: object
+      required:
+        - completed
+      properties:
+        completed:
+          type: boolean
+          description: New completion status for the task

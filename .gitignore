@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dependencies
 node_modules/
 
@@ -27,3 +28,104 @@ yarn-debug.log*
 yarn-error.log*
 build/
 dist/
+=======
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env*
+!.env.example
+
+# Node.js (for frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+coverage/
+*.lcov
+.nyc_output/
+
+# Next.js
+.next/
+out/
+
+# Build outputs
+dist/
+build/
+target/
+
+# Local configuration
+*.local
+.settings/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*.original
+*.orig
+*.tmp
+*.temp
+
+# Database
+*.db
+*.db-journal
+
+# Secrets and sensitive data
+secrets/
+*.key
+*.pem
+*.crt
+*.cert
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Deployment
+.dockerignore
+*.dockerignore
+
+# Better Auth
+.auth/
+.auth/*
+>>>>>>> 1de9837 (adding)
